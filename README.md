@@ -35,11 +35,15 @@ Keygrip keeps a reference to this array to automatically reflect any changes. Th
 
 This creates a SHA1 HMAC based on the _first_ key in the keylist, and outputs it as a 27-byte url-safe base64 digest (base64 without padding, replacing `+` with `-` and `/` with `_`).
 
-### keys.verify( data, digest )
+### keys.index( data, digest )
 
 This loops through all of the keys currently in the keylist until the digest of the current key matches the given digest, at which point the current index is returned. If no key is matched, `-1` is returned.
 
 The idea is that if the index returned is greater than `0`, the data should be re-signed to prevent premature credential invalidation, and enable better performance for subsequent challenges.
+
+### keys.verify( data, digest )
+
+This uses `index` to return `true` if the digest matches any existing keys, and `false` otherwise.
 
 ## Example
 
