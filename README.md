@@ -16,8 +16,7 @@ keygrip is a [node.js](http://nodejs.org/) module for signing and verifying data
     // ./test.js
     var assert = require( "assert" )
       , keygrip = require( "keygrip" )
-      , keylist = require( "keygrip/lib/defaultKeys" )
-      , keys, hash, index
+      , keylist, keys, hash, index
     
     // keygrip takes an array of keys, but if none exist,
     // it uses the defaults created during npm installation.
