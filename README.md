@@ -1,53 +1,34 @@
-cookie-node.js
-============
+keygrip
+=======
 
-`cookie-node` is a cookie module for [node.js](http://nodejs.org/), based
-loosely on Tornado's approach to [signed cookies](http://www.tornadoweb.org/documentation#cookies-and-secure-cookies).
+keygrip is a [node.js](http://nodejs.org/) module for signing and verifying data, based on a rotating credential system. It can be used to detect tampering for signed URLs or cookies.
 
-To start, require the library in your app:
+## Requirements
 
-    var cookie = require( "./cookie-node" );
+* [nodejs](http://nodejs.org/), tested with 0.4.1
 
-This extends the `ServerRequest` and `ServerResponse` objects, allowing you to
-get cookies on requests and set them on responses for server calls:
+## Install
 
-    function( req, res ) {
-      var name = req.getCookie( "name" ),
-          length = name.length;
-
-      res.setCookie( "name_length", length );
-
-      res.writeHead(200, {"Content-Type": "text/html"});	
-      res.write( "Your name has " + length + " characters." );	
-      res.close();
-    }
-
-You can also set a cookie secret to enable signed cookies, and prevent forged
-cookies:
-
-    cookie.secret = "myRandomSecretThatNoOneWillGuess";
-
-so that the above becomes:
-
-    function( req, res ) {
-      var name = req.getSecureCookie( "name" ),
-          length = name.length;
-
-      res.setSecureCookie( "name_length", length );
-
-      res.writeHead(200, {"Content-Type": "text/html"});	
-      res.write( "Your name has " + length + " characters." );	
-      res.close();
-    }
+    $ npm install keygrip
     
-(You don't need to set the secret, but your cookies will end up being
-invalidated when the server restarts, and you will be yelled at.)
+## Usage
+
+    secrets = [ "SEKRIT3", "SEKRIT2", "SEKRIT1" ]
+    keys = require( "./" )( secrets )
     
-When you set a secure cookie, the value is stored alongside its expiration
-date, as well as an HMAC SHA-1 digest of the two values with your secret. If a
-cookie's signature does not match that calculated on the server, the
-`getSecureCookie` method throws.
+    hash = keys.sign( "bieberschnitzel" )   // => tGdm98qasPSCUpW9ksobxcIjW1E
+    
+    keys.verify( "bieberschnitzel", hash )  // => 0 (1st key matched)
+    keys.verify( "bieberschnitzel", "o_O" ) // => -1 (not matched)
+    
+    secrets.unshift( "SEKRIT4" )            // rotate a new key in
+    secrets.pop()                           // rotate the oldest key out
+    
+    keys.verify( "bieberschnitzel", hash )  // => 1 (2nd key matched, time to re-sign)
+    
+Copyright
+---------
 
-If you'd like to clear a cookie, just use `res.clearCookie( name )`.
+Copyright (c) 2011 Jed Schmidt. See LICENSE.txt for details.
 
-That's about it. Send any questions or comments [here](http://twitter.com/jedschmidt).
+Send any questions or comments [here](http://twitter.com/jedschmidt).
