@@ -1,13 +1,13 @@
 // ./test.js
 var assert = require( "assert" )
-  , keygrip = require( "keygrip" )
+  , Keygrip = require( "keygrip" )
   , keylist, keys, hash, index
 
 // keygrip takes an array of keys, but if none exist,
 // it uses the defaults created during npm installation.
 // (but it'll will warn you)
 console.log( "Ignore this message:" )
-keys = keygrip( /* empty list */ )
+keys = new Keygrip( /* empty list */ )
 
 // .sign returns the hash for the first key
 // all hashes are SHA1 HMACs in url-safe base64
@@ -17,7 +17,7 @@ assert.ok( /^[\w\-]{27}$/.test( hash ) )
 // but we're going to use our list.
 // (note that the 'new' operator is optional)
 keylist = [ "SEKRIT3", "SEKRIT2", "SEKRIT1" ]
-keys = keygrip( keylist )
+keys = Keygrip( keylist )
 hash = keys.sign( "bieberschnitzel" )
 
 // .verify returns the index of the first matching key
