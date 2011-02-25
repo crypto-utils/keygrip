@@ -1,6 +1,11 @@
 { "name" : "keygrip"
 , "version" : "0.1.0"
 , "description" : "Key signing and verification for rotated credentials"
+, "scripts": { "install" : "node scripts/install.js" }
+, "repository" :
+  { "type" : "git"
+  , "url" : "http://github.com/jed/keygrip.git"
+  }
 , "main" : "./index"
 , "engines": [ "node" ]
 }
