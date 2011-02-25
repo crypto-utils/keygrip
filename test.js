@@ -20,11 +20,15 @@ keylist = [ "SEKRIT3", "SEKRIT2", "SEKRIT1" ]
 keys = Keygrip( keylist )
 hash = keys.sign( "bieberschnitzel" )
 
-// .verify returns the index of the first matching key
-index = keys.verify( "bieberschnitzel", hash )
+// .index returns the index of the first matching key
+index = keys.index( "bieberschnitzel", hash )
 assert.equal( index, 0 )
 
-index = keys.verify( "bieberschnitzel", "o_O" )
+// .verify returns the a boolean indicating a matched key
+matched = keys.verify( "bieberschnitzel", hash )
+assert.ok( matched )
+
+index = keys.index( "bieberschnitzel", "o_O" )
 assert.equal( index, -1 )
 
 // rotate a new key in, and an old key out
@@ -32,6 +36,6 @@ keylist.unshift( "SEKRIT4" )
 keylist.pop()
 
 // if index > 0, it's time to re-sign
-index = keys.verify( "bieberschnitzel", hash )
+index = keys.index( "bieberschnitzel", hash )
 assert.equal( index, 1 )
 hash = keys.sign( "bieberschnitzel" )
