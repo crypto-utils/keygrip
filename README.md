@@ -15,7 +15,7 @@ Keygrip is a [node.js](http://nodejs.org/) module for signing and verifying data
 
 ### keys = new Keygrip([ keylist ])
 
-This creates a new Keygrip based on the provided keylist, an array of secret keys used for SHA1 HMAC digests. Keygrip keeps a reference to this array to automatically reflect any changes. If no list is given, or the list is empty, Keygrip uses the default key created during `npm` installation, and will issue a warning to the console.
+This creates a new Keygrip based on the provided keylist, an array of secret keys used for SHA1 HMAC digests. If no list is given, or the list is empty, Keygrip uses the default key created during `npm` installation, and will issue a warning to the console.
 
 Note that the `new` operator is also optional, so all of the following will work when `Keygrip = require( "keygrip" )`:
 
@@ -28,6 +28,8 @@ Note that the `new` operator is also optional, so all of the following will work
 The keylist is an array of all valid keys for signing, in descending order of freshness; new keys should be `unshift`ed into the array and old keys should be `pop`ped.
 
 The tradeoff here is that adding more keys to the keylist allows for more granular freshness for key validation, at the cost of a more expensive worst-case scenario for old or invalid hashes.
+
+Keygrip keeps a reference to this array to automatically reflect any changes. This reference is stored using a closure to prevent external access.
 
 ### keys.sign( data )
 
