@@ -1,11 +1,22 @@
-{ "name" : "keygrip"
-, "version" : "0.1.3"
-, "description" : "Key signing and verification for rotated credentials"
-, "scripts": { "install" : "node scripts/install.js" }
-, "repository" :
-  { "type" : "git"
-  , "url" : "http://github.com/jed/keygrip.git"
-  }
-, "main" : "./index"
-, "engines": [ "node" ]
+{
+  "name": "keygrip",
+  "version": "0.1.6",
+  "description": "Key signing and verification for rotated credentials",
+  "scripts": {
+    "install": "node scripts/install.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jed/keygrip.git"
+  },
+  "main": "./index",
+  "engines": [
+    "node"
+  ],
+  "directories": {
+    "lib": "./lib"
+  },
+  "files": [
+    ""
+  ]
 }
