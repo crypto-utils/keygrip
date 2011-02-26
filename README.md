@@ -91,7 +91,6 @@ This uses `index` to return `true` if the digest matches any existing keys, and 
 
 ## TODO
 
-* Rewrite the `cookie` library to use `Keygrip`
 * Write a library for URL signing
 
 Copyright
