@@ -1,11 +1,9 @@
 Keygrip
 =======
 
+[![Build Status](https://secure.travis-ci.org/jed/keygrip.png)](http://travis-ci.org/jed/keygrip)
+
 Keygrip is a [node.js](http://nodejs.org/) module for signing and verifying data (such as cookies or URLs) through a rotating credential system, in which new server keys can be added and old ones removed regularly, without invalidating client credentials.
-
-## Requirements
-
-* [node.js](http://nodejs.org/), tested with 0.4.1
 
 ## Install
 
@@ -96,6 +94,6 @@ This uses `index` to return `true` if the digest matches any existing keys, and 
 Copyright
 ---------
 
-Copyright (c) 2011 Jed Schmidt. See LICENSE.txt for details.
+Copyright (c) 2012 Jed Schmidt. See LICENSE.txt for details.
 
 Send any questions or comments [here](http://twitter.com/jedschmidt).

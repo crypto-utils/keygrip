@@ -1,6 +1,6 @@
 // ./test.js
 var assert = require( "assert" )
-  , Keygrip = require( "keygrip" )
+  , Keygrip = require( "./" )
   , keylist, keys, hash, index
 
 // keygrip takes an array of keys, but if none exist,
