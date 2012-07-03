@@ -4,7 +4,7 @@ fs = require( "fs" )
 
 keysPath = path.join( __dirname, "defaultKeys.json" )
 
-defaults = path.existsSync( keysPath )
+defaults = fs.existsSync( keysPath )
   ? JSON.parse( fs.readFileSync( keysPath ) )
   : undefined
 
