@@ -2,8 +2,10 @@ var crypto = require("crypto")
   , path   = require("path")
   , fs     = require("fs")
 
+  , existsSync = fs.existsSync || path.existsSync
+
   , keysPath = path.join(__dirname, "defaultKeys.json")
-  , defaults = fs.existsSync(keysPath)
+  , defaults = existsSync(keysPath)
       ? JSON.parse(fs.readFileSync(keysPath))
       : undefined
 
