@@ -35,7 +35,7 @@ function Keygrip(keys) {
 
   this.index = function(data, digest) {
     for (var i = 0, l = keys.length; i < l; i++) {
-      if (digest === sign(data, keys[i])) return i
+      if (constantTimeCompare(digest, sign(data, keys[i]))) return i
     }
 
     return -1
@@ -45,5 +45,28 @@ function Keygrip(keys) {
 Keygrip.sign = Keygrip.verify = Keygrip.index = function() {
   throw "Usage: require('keygrip')(<array-of-keys>)"
 }
+
+//http://codahale.com/a-lesson-in-timing-attacks/
+var constantTimeCompare = function(val1, val2){
+    if(val1 == null && val2 != null){
+        return false;
+    } else if(val2 == null && val1 != null){
+        return false;
+    } else if(val1 == null && val2 == null){
+        return true;
+    }
+
+    if(val1.length !== val2.length){
+        return false;
+    }
+
+    var matches = 1;
+
+    for(var i = 0; i < val1.length; i++){
+        matches &= (val1.charAt(i) === val2.charAt(i) ? 1 : 0); //Don't short circuit
+    }
+
+    return matches === 1;
+};
 
 module.exports = Keygrip
