@@ -9,8 +9,10 @@ var crypto = require("crypto")
       ? JSON.parse(fs.readFileSync(keysPath))
       : undefined
 
-function Keygrip(keys) {
-  if (!(this instanceof Keygrip)) return new Keygrip(keys)
+function Keygrip(keys, algorithm, encoding) {
+  if (!algorithm) algorithm = "sha1";
+  if (!encoding) encoding = "base64";
+  if (!(this instanceof Keygrip)) return new Keygrip(keys, algorithm, encoding)
 
   if (!keys || !(0 in keys)) {
     if (keys = defaults) console.warn("No keys specified, using defaults instead.")
@@ -20,8 +22,8 @@ function Keygrip(keys) {
 
   function sign(data, key) {
     return crypto
-      .createHmac("sha1", key)
-      .update(data).digest("base64")
+      .createHmac(algorithm, key)
+      .update(data).digest(encoding)
       .replace(/\/|\+|=/g, function(x) {
         return ({ "/": "_", "+": "-", "=": "" })[x]
       })
