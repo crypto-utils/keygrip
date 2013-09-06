@@ -1,6 +1,6 @@
 {
   "name": "keygrip",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Key signing and verification for rotated credentials",
   "scripts": {
     "install": "[ -x /usr/bin/nodejs ] && /usr/bin/nodejs ./install.js || node ./install.js"
