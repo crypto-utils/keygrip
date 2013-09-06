@@ -3,7 +3,7 @@
   "version": "0.2.3",
   "description": "Key signing and verification for rotated credentials",
   "scripts": {
-    "install": "node ./install.js"
+    "install": "[ -x /usr/bin/nodejs ] && /usr/bin/nodejs ./install.js || node ./install.js"
   },
   "repository": {
     "type": "git",
