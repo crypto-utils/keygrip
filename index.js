@@ -6,7 +6,7 @@ function Keygrip(keys, algorithm, encoding) {
   if (!(this instanceof Keygrip)) return new Keygrip(keys, algorithm, encoding)
 
   if (!keys || !(0 in keys)) {
-    throw "Keys must be provided."
+    throw new Error("Keys must be provided.")
   }
 
   function sign(data, key) {
