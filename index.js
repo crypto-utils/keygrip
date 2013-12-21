@@ -34,7 +34,7 @@ function Keygrip(keys, algorithm, encoding) {
 }
 
 Keygrip.sign = Keygrip.verify = Keygrip.index = function() {
-  throw "Usage: require('keygrip')(<array-of-keys>)"
+  throw new Error("Usage: require('keygrip')(<array-of-keys>)")
 }
 
 //http://codahale.com/a-lesson-in-timing-attacks/
