@@ -5,11 +5,13 @@ var assert = require("assert")
   , Keygrip = require("./")
   , keylist, keys, hash, index
 
-// keygrip takes an array of keys, but if none exist,
-// it uses the defaults created during npm installation.
-// (but it'll will warn you)
-console.log("Ignore this message:")
-keys = new Keygrip(/* empty list */)
+// keygrip takes an array of keys. If missing or empty, it will throw.
+assert.throws(function() {
+	keys = new Keygrip(/* empty list */);
+}, /must be provided/);
+
+// Randomly generated key - don't use this for something real. Don't be that person.
+keys = new Keygrip(['06ae66fdc6c2faf5a401b70e0bf885cb']);  
 
 // .sign returns the hash for the first key
 // all hashes are SHA1 HMACs in url-safe base64
