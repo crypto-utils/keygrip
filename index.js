@@ -1,23 +1,12 @@
 var crypto = require("crypto")
-  , path   = require("path")
-  , fs     = require("fs")
-
-  , existsSync = fs.existsSync || path.existsSync
-
-  , keysPath = path.join(__dirname, "defaultKeys.json")
-  , defaults = existsSync(keysPath)
-      ? JSON.parse(fs.readFileSync(keysPath))
-      : undefined
-
+  
 function Keygrip(keys, algorithm, encoding) {
   if (!algorithm) algorithm = "sha1";
   if (!encoding) encoding = "base64";
   if (!(this instanceof Keygrip)) return new Keygrip(keys, algorithm, encoding)
 
   if (!keys || !(0 in keys)) {
-    if (keys = defaults) console.warn("No keys specified, using defaults instead.")
-
-    else throw "Keys must be provided or default keys must exist."
+    throw "Keys must be provided."
   }
 
   function sign(data, key) {
