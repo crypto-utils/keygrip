@@ -13,14 +13,12 @@ Keygrip is a [node.js](http://nodejs.org/) module for signing and verifying data
 
 ### keys = new Keygrip([keylist], [hmacAlgorithm], [encoding])
 
-This creates a new Keygrip based on the provided keylist, an array of secret keys used for SHA1 HMAC digests. If no `keylist` is given, or is empty, Keygrip uses the default key created during `npm` installation, and will issue a warning to the console. `hmacAlgorithm` defaults to `'sha1'` and `encoding` defaults to `'base64'`.
+This creates a new Keygrip based on the provided keylist, an array of secret keys used for SHA1 HMAC digests. `keylist` is obligatory. `hmacAlgorithm` defaults to `'sha1'` and `encoding` defaults to `'base64'`.
 
 Note that the `new` operator is also optional, so all of the following will work when `Keygrip = require("keygrip")`:
 
 ```javascript
-keys = new Keygrip
 keys = new Keygrip(["SEKRIT2", "SEKRIT1"])
-keys = Keygrip()
 keys = Keygrip(["SEKRIT2", "SEKRIT1"])
 keys = require("keygrip")()
 keys = Keygrip(["SEKRIT2", "SEKRIT1"], 'sha256', 'hex')
@@ -56,22 +54,14 @@ var assert = require("assert")
   , Keygrip = require("keygrip")
   , keylist, keys, hash, index
 
-// keygrip takes an array of keys, but if none exist,
-// it uses the defaults created during npm installation.
-// (but it'll will warn you)
-console.log("Ignore this message:")
-keys = new Keygrip(/* empty list */)
-
-// .sign returns the hash for the first key
-// all hashes are SHA1 HMACs in url-safe base64
-hash = keys.sign("bieberschnitzel")
-assert.ok(/^[\w\-]{27}$/.test(hash))
-
 // but we're going to use our list.
 // (note that the 'new' operator is optional)
 keylist = ["SEKRIT3", "SEKRIT2", "SEKRIT1"]
 keys = Keygrip(keylist)
+// .sign returns the hash for the first key
+// all hashes are SHA1 HMACs in url-safe base64
 hash = keys.sign("bieberschnitzel")
+assert.ok(/^[\w\-]{27}$/.test(hash))
 
 // .index returns the index of the first matching key
 index = keys.index("bieberschnitzel", hash)
