@@ -1,7 +1,7 @@
 Keygrip
 =======
 
-[![Build Status](https://secure.travis-ci.org/jed/keygrip.png)](http://travis-ci.org/jed/keygrip)
+[![Build Status](https://secure.travis-ci.org/expressjs/keygrip.png)](http://travis-ci.org/expressjs/keygrip)
 
 Keygrip is a [node.js](http://nodejs.org/) module for signing and verifying data (such as cookies or URLs) through a rotating credential system, in which new server keys can be added and old ones removed regularly, without invalidating client credentials.
 
