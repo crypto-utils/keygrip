@@ -3,7 +3,10 @@
   "version": "1.0.1",
   "description": "Key signing and verification for rotated credentials",
   "scripts": {
-    "test": "node test.js"
+    "test": "mocha --reporter spec"
   },
-  "repository": "expressjs/keygrip"
+  "repository": "expressjs/keygrip",
+  "devDependencies": {
+    "mocha": "1"
+  }
 }

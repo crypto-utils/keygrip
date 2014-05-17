@@ -1,2 +1,4 @@
 lib/defaultKeys.js
 defaultKeys.js
+node_modules
+.DS_Store*
