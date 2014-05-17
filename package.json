@@ -5,13 +5,5 @@
   "scripts": {
     "test": "node test.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/expressjs/keygrip.git"
-  },
-  "dependencies": {},
-  "devDependencies": {},
-  "engines": {
-    "node": "*"
-  }
+  "repository": "expressjs/keygrip"
 }
