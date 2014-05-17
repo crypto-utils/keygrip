@@ -12,6 +12,20 @@ describe('keygrip(keys)', function () {
       keys = new Keygrip(/* empty list */);
     }, /must be provided/);
   })
+
+  it('should throw when setting an invalid algorithm', function () {
+    var keys = new Keygrip(['a', 'b'])
+    assert.throws(function () {
+      keys.algorithm = 'asdf'
+    }, /unsupported/)
+  })
+
+  it('should throw when setting an invalid cipher', function () {
+    var keys = new Keygrip(['a', 'b'])
+    assert.throws(function () {
+      keys.cipher = 'asdf'
+    }, /unsupported/)
+  })
 })
 
 describe('keygrip([key])', function () {
