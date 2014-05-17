@@ -6,6 +6,9 @@
     "test": "mocha --reporter spec"
   },
   "repository": "expressjs/keygrip",
+  "dependencies": {
+    "scmp": "0.0.3"
+  },
   "devDependencies": {
     "mocha": "1"
   }
