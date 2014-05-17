@@ -38,6 +38,22 @@ describe('keygrip([key])', function () {
     hash = keys.sign("bieberschnitzel")
     assert.ok(/^[\w\-]{27}$/.test(hash))
   })
+
+  it('should encrypt a message', function () {
+    hash = keys.encrypt('lol')
+    assert.equal('lol', keys.decrypt(hash))
+  })
+
+  it('should return false on bad decryptions', function () {
+    var keys2 = new Keygrip(['lkjasdf'])
+    assert.equal(false, keys2.decrypt(hash))
+  })
+
+  it('should throw on bad inputs', function () {
+    assert.throws(function () {
+      keys.decrypt(hash + 'asdf')
+    })
+  })
 })
 
 describe('keygrip([keys...])', function () {
