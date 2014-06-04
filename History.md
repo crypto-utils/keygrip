@@ -6,3 +6,4 @@
  * remove the `[encoding]` option, `Buffer`s are now always returned
  * add `.encrypt()`, `.decrypt()`, and `.cipher=`
  * default hash algorithm is now `sha256`
+ * changed `.index()` to `.indexOf()`

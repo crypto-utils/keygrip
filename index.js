@@ -99,10 +99,11 @@ Keygrip.prototype.sign = function Keygrip$_sign(data, key) {
 }
 
 Keygrip.prototype.verify = function Keygrip$_verify(data, digest) {
-  return this.index(data, digest) > -1
+  return this.indexOf(data, digest) > -1
 }
 
-Keygrip.prototype.index = function Keygrip$_index(data, digest) {
+Keygrip.prototype.index =
+Keygrip.prototype.indexOf = function Keygrip$_index(data, digest) {
   var keys = this.keys
   for (var i = 0, l = keys.length; i < l; i++) {
     if (constantTimeCompare(digest, this.sign(data, keys[i]))) return i
@@ -115,6 +116,7 @@ Keygrip.encrypt =
 Keygrip.decrypt =
 Keygrip.sign =
 Keygrip.verify =
-Keygrip.index = function() {
+Keygrip.index =
+Keygrip.indexOf = function() {
   throw new Error("Usage: require('keygrip')(<array-of-keys>)")
 }
