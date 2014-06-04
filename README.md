@@ -3,7 +3,7 @@ Keygrip
 
 [![Build Status](https://secure.travis-ci.org/expressjs/keygrip.png)](http://travis-ci.org/expressjs/keygrip)
 
-Keygrip is a [node.js](http://nodejs.org/) module for signing and verifying data (such as cookies or URLs) through a rotating credential system, in which new server keys can be added and old ones removed regularly, without invalidating client credentials.
+Keygrip is a [node.js](http://nodejs.org/) module for signing and verifying data through a rotating credential system, in which new server keys can be added and old ones removed regularly, without invalidating client credentials.
 
 ## Install
 
@@ -11,19 +11,13 @@ Keygrip is a [node.js](http://nodejs.org/) module for signing and verifying data
 
 ## API
 
-### keys = new Keygrip([keylist], [hmacAlgorithm], [encoding])
+### keys = Keygrip(keylist)
 
-This creates a new Keygrip based on the provided keylist, an array of secret keys used for SHA1 HMAC digests. `keylist` is obligatory. `hmacAlgorithm` defaults to `'sha1'` and `encoding` defaults to `'base64'`.
-
-Note that the `new` operator is also optional, so all of the following will work when `Keygrip = require("keygrip")`:
+This creates a new Keygrip based on the provided `keylist`.
 
 ```javascript
-keys = new Keygrip(["SEKRIT2", "SEKRIT1"])
+var Keygrip = require('keygrip')
 keys = Keygrip(["SEKRIT2", "SEKRIT1"])
-keys = require("keygrip")()
-keys = Keygrip(["SEKRIT2", "SEKRIT1"], 'sha256', 'hex')
-keys = Keygrip(["SEKRIT2", "SEKRIT1"], 'sha256')
-keys = Keygrip(["SEKRIT2", "SEKRIT1"], undefined, 'hex')
 ```
 
 The keylist is an array of all valid keys for signing, in descending order of freshness; new keys should be `unshift`ed into the array and old keys should be `pop`ped.
@@ -32,65 +26,40 @@ The tradeoff here is that adding more keys to the keylist allows for more granul
 
 Keygrip keeps a reference to this array to automatically reflect any changes. This reference is stored using a closure to prevent external access.
 
-### keys.sign(data)
+When using `Keygrip` to encrypt and decrypt data, each `key`'s length is important.
 
-This creates a SHA1 HMAC based on the _first_ key in the keylist, and outputs it as a 27-byte url-safe base64 digest (base64 without padding, replacing `+` with `-` and `/` with `_`).
+### var buf = keys.sign(data)
 
-### keys.index(data, digest)
+This creates a HMAC based on the _first_ key in the keylist, and outputs it as a buffer.
+
+Uses `.hash=` as the underlying algorithm.
+
+### var index = keys.indexOf(data)
 
 This loops through all of the keys currently in the keylist until the digest of the current key matches the given digest, at which point the current index is returned. If no key is matched, `-1` is returned.
 
 The idea is that if the index returned is greater than `0`, the data should be re-signed to prevent premature credential invalidation, and enable better performance for subsequent challenges.
 
-### keys.verify(data, digest)
+### var bool = keys.verify(data)
 
 This uses `index` to return `true` if the digest matches any existing keys, and `false` otherwise.
 
-## Example
+### var buf = keys.encrypt(message, [iv])
 
-```javascript
-// ./test.js
-var assert = require("assert")
-  , Keygrip = require("keygrip")
-  , keylist, keys, hash, index
+Creates an encrypted message as a buffer based on the _first_ key in the keylist and optionally based on an initialization vector.
 
-// but we're going to use our list.
-// (note that the 'new' operator is optional)
-keylist = ["SEKRIT3", "SEKRIT2", "SEKRIT1"]
-keys = Keygrip(keylist)
-// .sign returns the hash for the first key
-// all hashes are SHA1 HMACs in url-safe base64
-hash = keys.sign("bieberschnitzel")
-assert.ok(/^[\w\-]{27}$/.test(hash))
+Uses `.cipher=` as the underlying algorithm.
+Note that `iv` length is important.
 
-// .index returns the index of the first matching key
-index = keys.index("bieberschnitzel", hash)
-assert.equal(index, 0)
+### var buf = keys.decrypt(message, [iv])
 
-// .verify returns the a boolean indicating a matched key
-matched = keys.verify("bieberschnitzel", hash)
-assert.ok(matched)
+Decrypts a message, optionally with an initialization vector.
+Returns a buffer.
 
-index = keys.index("bieberschnitzel", "o_O")
-assert.equal(index, -1)
+### keys.hash=
 
-// rotate a new key in, and an old key out
-keylist.unshift("SEKRIT4")
-keylist.pop()
+Set the hashing algorithm for signing, defaulting to `sha256`.
 
-// if index > 0, it's time to re-sign
-index = keys.index("bieberschnitzel", hash)
-assert.equal(index, 1)
-hash = keys.sign("bieberschnitzel")
-```
+### .cipher=
 
-## TODO
-
-* Write a library for URL signing
-
-Copyright
----------
-
-Copyright (c) 2012 Jed Schmidt. See LICENSE.txt for details.
-
-Send any questions or comments [here](http://twitter.com/jedschmidt).
+Set the algorithm used for message encryption, defaulting to `aes-256-cbc`.
