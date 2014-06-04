@@ -1,6 +1,7 @@
 "use strict";
 
 // ./test.js
+var crypto = require('crypto')
 var assert = require("assert")
   , Keygrip = require("./")
   , keylist, keys, hash, index
@@ -70,6 +71,47 @@ describe('keygrip([keys...])', function () {
     keylist = ["Newest", "AnotherKey", "Oldest"]
     keys = Keygrip(keylist)
     testKeygripInstance(keys);
+  })
+})
+
+describe('Message encryption', function () {
+  var length = 16
+  var key = crypto.randomBytes(32)
+  var keygrip = new Keygrip([key])
+
+  describe('with iv', function () {
+    var iv = crypto.randomBytes(length)
+    var message = keygrip.encrypt('lol', iv)
+
+    it('should encrypt and decrypt', function () {
+      assert.equal('lol', keygrip.decrypt(message, iv).toString('utf8'))
+    })
+
+    it('should return false on invalid key', function () {
+      assert.equal(false, new Keygrip([crypto.randomBytes(32)])
+        .decrypt(message, iv))
+    })
+
+    it('should return false on missing iv', function () {
+      assert.equal(false, keygrip.decrypt(message))
+    })
+
+    it('should return false on invalid iv', function () {
+      assert.equal(false, keygrip.decrypt(message, crypto.randomBytes(length)))
+    })
+  })
+
+  describe('without iv', function () {
+    var message = keygrip.encrypt('lol')
+
+    it('should encrypt and decrypt', function () {
+      assert.equal('lol', keygrip.decrypt(message).toString('utf8'))
+    })
+
+    it('should return false on invalid key', function () {
+      assert.equal(false, new Keygrip([crypto.randomBytes(32)])
+        .decrypt(message))
+    })
   })
 })
 
