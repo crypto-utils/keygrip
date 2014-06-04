@@ -47,7 +47,7 @@ Keygrip.prototype = {
 
   // defaults
   _hash: 'sha256',
-  _cipher: 'aes256',
+  _cipher: 'aes-256-cbc',
 }
 
 // encrypt a message
