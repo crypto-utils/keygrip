@@ -4,31 +4,35 @@ var constantTimeCompare = require('scmp')
 
 module.exports = Keygrip
 
-function Keygrip(keys, algorithm, encoding) {
+function Keygrip(keys) {
+  if (arguments.length > 1) {
+    console.warn('as of v2, keygrip() only accepts a single argument.')
+    console.warn('set keygrip().hash= instead.')
+    console.warn('keygrip() also now only supports buffers.')
+  }
+
   if (!Array.isArray(keys) || !keys.length) throw new Error("Keys must be provided.")
-  if (!(this instanceof Keygrip)) return new Keygrip(keys, algorithm, encoding)
+  if (!(this instanceof Keygrip)) return new Keygrip(keys)
 
   this.keys = keys
-  if (algorithm) this.algorithm = algorithm
-  if (encoding) this.encoding = encoding
 }
 
 /**
- * Allow setting `keygrip.algorithm = 'sha1'`
+ * Allow setting `keygrip.hash = 'sha1'`
  * or `keygrip.cipher = 'aes256'`
  * with validation instead of always doing `keygrip([], alg, enc)`.
  * This also allows for easier defaults.
  */
 
 Keygrip.prototype = {
-  get algorithm() {
-    return this._algorithm
+  get hash() {
+    return this._hash
   },
 
-  set algorithm(val) {
+  set hash(val) {
     if (!~crypto.getHashes().indexOf(val))
       throw new Error('unsupported hash algorithm: ' + val)
-    this._algorithm = val
+    this._hash = val
   },
 
   get cipher() {
@@ -42,44 +46,45 @@ Keygrip.prototype = {
   },
 
   // defaults
-  _algorithm: 'sha1',
+  _hash: 'sha256',
   _cipher: 'aes256',
-  encoding: 'base64',
 }
 
 // encrypt a message
-Keygrip.prototype.encrypt = function Keygrip$_encrypt(data, key, encoding) {
+Keygrip.prototype.encrypt = function Keygrip$_encrypt(data, iv, key) {
   key = key || this.keys[0]
 
-  var cipher = crypto.createCipher(this.cipher, key)
-  cipher.update(data, encoding)
-  return cipher
-    .final(this.encoding)
-    .replace(/\/|\+|=/g, _sign_replace)
+  var cipher = iv
+    ? crypto.createCipheriv(this.cipher, key, iv)
+    : crypto.createCipher(this.cipher, key)
+  cipher.update(data)
+  return cipher.final()
 }
 
 // decrypt a single message
 // returns false on bad decrypts
-Keygrip.prototype._decrypt = function Keygrip$__decrypt(data, key, encoding) {
+Keygrip.prototype.decrypt = function Keygrip$__decrypt(data, iv, key) {
+  if (!key) {
+    // decrypt every key
+    var keys = this.keys
+    for (var i = 0, l = keys.length; i < l; i++) {
+      var message = this.decrypt(data, iv, keys[i])
+      if (message !== false) return message
+    }
+
+    return false
+  }
+
   try {
-    var cipher = crypto.createDecipher(this.cipher, key)
-    cipher.update(data, this.encoding)
-    return cipher.final(encoding)
+    var cipher = iv
+      ? crypto.createDecipheriv(this.cipher, key, iv)
+      : crypto.createDecipher(this.cipher, key)
+    cipher.update(data)
+    return cipher.final()
   } catch (err) {
     if (/bad decrypt/.test(err.message)) return false
     throw err
   }
-}
-
-// decrypt every key
-Keygrip.prototype.decrypt = function Keygrip$_decrypt(data, encoding) {
-  var keys = this.keys
-  for (var i = 0, l = keys.length; i < l; i++) {
-    var message = this._decrypt(data, keys[i], encoding)
-    if (message !== false) return message
-  }
-
-  return false
 }
 
 // message signing
@@ -88,10 +93,9 @@ Keygrip.prototype.sign = function Keygrip$_sign(data, key) {
   key = key || this.keys[0]
 
   return crypto
-    .createHmac(this.algorithm, key)
+    .createHmac(this.hash, key)
     .update(data)
-    .digest(this.encoding)
-    .replace(/\/|\+|=/g, _sign_replace)
+    .digest()
 }
 
 Keygrip.prototype.verify = function Keygrip$_verify(data, digest) {
@@ -107,17 +111,10 @@ Keygrip.prototype.index = function Keygrip$_index(data, digest) {
   return -1
 }
 
-Keygrip.sign = Keygrip.verify = Keygrip.index = function() {
+Keygrip.encrypt =
+Keygrip.decrypt =
+Keygrip.sign =
+Keygrip.verify =
+Keygrip.index = function() {
   throw new Error("Usage: require('keygrip')(<array-of-keys>)")
-}
-
-// replace base64 characters with more friendly ones
-var _sign_replacements = {
-  "/": "_",
-  "+": "-",
-  "=": ""
-}
-
-function _sign_replace(x) {
-  return _sign_replacements[x]
 }

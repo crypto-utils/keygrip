@@ -13,10 +13,10 @@ describe('keygrip(keys)', function () {
     }, /must be provided/);
   })
 
-  it('should throw when setting an invalid algorithm', function () {
+  it('should throw when setting an invalid hash algorithm', function () {
     var keys = new Keygrip(['a', 'b'])
     assert.throws(function () {
-      keys.algorithm = 'asdf'
+      keys.hash = 'asdf'
     }, /unsupported/)
   })
 
@@ -36,12 +36,12 @@ describe('keygrip([key])', function () {
     // .sign returns the hash for the first key
     // all hashes are SHA1 HMACs in url-safe base64
     hash = keys.sign("bieberschnitzel")
-    assert.ok(/^[\w\-]{27}$/.test(hash))
+    assert.ok(/^[\w\+=]{44}$/.test(hash.toString('base64')))
   })
 
   it('should encrypt a message', function () {
     hash = keys.encrypt('lol')
-    assert.equal('lol', keys.decrypt(hash))
+    assert.equal('lol', keys.decrypt(hash).toString('utf8'))
   })
 
   it('should return false on bad decryptions', function () {
@@ -68,7 +68,7 @@ describe('keygrip([keys...])', function () {
   it('should sign a string with a different algorithm and encoding', function () {
     // now pass in a different hmac algorithm and encoding
     keylist = ["Newest", "AnotherKey", "Oldest"]
-    keys = Keygrip(keylist, "sha256", "hex")
+    keys = Keygrip(keylist)
     testKeygripInstance(keys);
   })
 })
