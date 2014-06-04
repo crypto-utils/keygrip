@@ -119,14 +119,14 @@ function testKeygripInstance(keys) {
 	hash = keys.sign("bieberschnitzel")
 
 	// .index returns the index of the first matching key
-	index = keys.index("bieberschnitzel", hash)
+	index = keys.indexOf("bieberschnitzel", hash)
 	assert.equal(index, 0)
 
 	// .verify returns the a boolean indicating a matched key
 	var matched = keys.verify("bieberschnitzel", hash)
 	assert.ok(matched)
 
-	index = keys.index("bieberschnitzel", "o_O")
+	index = keys.indexOf("bieberschnitzel", "o_O")
 	assert.equal(index, -1)
 
 	// rotate a new key in, and an old key out
@@ -134,7 +134,7 @@ function testKeygripInstance(keys) {
 	keylist.pop()
 
 	// if index > 0, it's time to re-sign
-	index = keys.index("bieberschnitzel", hash)
+	index = keys.indexOf("bieberschnitzel", hash)
 	assert.equal(index, 1)
 	hash = keys.sign("bieberschnitzel")
 }
