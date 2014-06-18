@@ -51,10 +51,12 @@ Creates an encrypted message as a buffer based on the _first_ key in the keylist
 Uses `.cipher=` as the underlying algorithm.
 Note that `iv` length is important.
 
-### var buf = keys.decrypt(message, [iv])
+### var [buf, i] = keys.decrypt(message, [iv])
 
 Decrypts a message, optionally with an initialization vector.
-Returns a buffer.
+Returns a buffer as `buf`.
+Also returns `i`, the index of the `key` used.
+If `i !== 0`, you may want to re-encrypt the message to use the latest key.
 
 ### keys.hash=
 

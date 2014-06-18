@@ -69,7 +69,7 @@ Keygrip.prototype.decrypt = function Keygrip$__decrypt(data, iv, key) {
     var keys = this.keys
     for (var i = 0, l = keys.length; i < l; i++) {
       var message = this.decrypt(data, iv, keys[i])
-      if (message !== false) return message
+      if (message !== false) return [message, i]
     }
 
     return false
