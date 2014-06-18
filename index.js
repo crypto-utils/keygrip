@@ -25,6 +25,8 @@ function Keygrip(keys) {
  */
 
 Keygrip.prototype = {
+  constructor: Keygrip,
+
   get hash() {
     return this._hash
   },
