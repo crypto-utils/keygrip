@@ -42,7 +42,7 @@ describe('keygrip([key])', function () {
 
   it('should encrypt a message', function () {
     hash = keys.encrypt('lol')
-    assert.equal('lol', keys.decrypt(hash).toString('utf8'))
+    assert.equal('lol', keys.decrypt(hash)[0].toString('utf8'))
   })
 
   it('should return false on bad decryptions', function () {
@@ -84,7 +84,7 @@ describe('Message encryption', function () {
     var message = keygrip.encrypt('lol', iv)
 
     it('should encrypt and decrypt', function () {
-      assert.equal('lol', keygrip.decrypt(message, iv).toString('utf8'))
+      assert.equal('lol', keygrip.decrypt(message, iv)[0].toString('utf8'))
     })
 
     it('should return false on invalid key', function () {
@@ -105,7 +105,7 @@ describe('Message encryption', function () {
     var message = keygrip.encrypt('lol')
 
     it('should encrypt and decrypt', function () {
-      assert.equal('lol', keygrip.decrypt(message).toString('utf8'))
+      assert.equal('lol', keygrip.decrypt(message)[0].toString('utf8'))
     })
 
     it('should return false on invalid key', function () {
