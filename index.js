@@ -1,6 +1,7 @@
 
 var crypto = require("crypto")
 var constantTimeCompare = require('scmp')
+var debug = require('debug')('keygrip')
 
 module.exports = Keygrip
 
@@ -60,7 +61,6 @@ Keygrip.prototype.encrypt = function Keygrip$_encrypt(data, iv, key) {
     ? crypto.createCipheriv(this.cipher, key, iv)
     : crypto.createCipher(this.cipher, key)
   return Buffer.concat([cipher.update(data), cipher.final()])
-  return cipher.final()
 }
 
 // decrypt a single message
@@ -83,8 +83,8 @@ Keygrip.prototype.decrypt = function Keygrip$__decrypt(data, iv, key) {
       : crypto.createDecipher(this.cipher, key)
     return Buffer.concat([cipher.update(data), cipher.final()])
   } catch (err) {
-    if (/bad decrypt/.test(err.message)) return false
-    throw err
+    debug(err.stack)
+    return false
   }
 }
 
