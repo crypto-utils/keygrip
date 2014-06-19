@@ -50,10 +50,8 @@ describe('keygrip([key])', function () {
     assert.equal(false, keys2.decrypt(hash))
   })
 
-  it('should throw on bad inputs', function () {
-    assert.throws(function () {
-      keys.decrypt(hash + 'asdf')
-    })
+  it('should return false on bad inputs', function () {
+    assert.equal(false, keys.decrypt(hash + 'asdf'))
   })
 })
 
