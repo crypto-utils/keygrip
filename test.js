@@ -112,6 +112,15 @@ describe('Message encryption', function () {
       assert.equal(false, new Keygrip([crypto.randomBytes(32)])
         .decrypt(message))
     })
+
+    it('should work on really long strings', function () {
+      var string = ''
+      for (var i = 0; i < 10000; i++) {
+        string += 'a'
+      }
+      var msg = keygrip.encrypt(new Buffer(string))
+      assert.equal(string, keygrip.decrypt(msg)[0].toString('utf8'))
+    })
   })
 })
 
