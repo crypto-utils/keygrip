@@ -59,7 +59,7 @@ Keygrip.prototype.encrypt = function Keygrip$_encrypt(data, iv, key) {
   var cipher = iv
     ? crypto.createCipheriv(this.cipher, key, iv)
     : crypto.createCipher(this.cipher, key)
-  cipher.update(data)
+  return Buffer.concat([cipher.update(data), cipher.final()])
   return cipher.final()
 }
 
@@ -81,8 +81,7 @@ Keygrip.prototype.decrypt = function Keygrip$__decrypt(data, iv, key) {
     var cipher = iv
       ? crypto.createDecipheriv(this.cipher, key, iv)
       : crypto.createDecipher(this.cipher, key)
-    cipher.update(data)
-    return cipher.final()
+    return Buffer.concat([cipher.update(data), cipher.final()])
   } catch (err) {
     if (/bad decrypt/.test(err.message)) return false
     throw err
