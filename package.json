@@ -5,7 +5,10 @@
   "scripts": {
     "test": "mocha --reporter spec --bail"
   },
-  "repository": "expressjs/keygrip",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/expressjs/keygrip"
+  },
   "dependencies": {
     "debug": "*",
     "scmp": "0.0.3"
@@ -15,5 +18,12 @@
   },
   "engines": {
     "node": ">= 0.10"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/expressjs/keygrip/issues"
+  },
+  "homepage": "https://github.com/expressjs/keygrip",
+  "main": "index.js",
+  "author": "Jed Schmidt",
+  "license": "MIT"
 }
