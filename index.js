@@ -2,6 +2,7 @@
 var crypto = require("crypto")
 var constantTimeCompare = require('scmp')
 var debug = require('debug')('keygrip')
+var util = require('./lib/util')
 
 module.exports = Keygrip
 
@@ -33,7 +34,7 @@ Keygrip.prototype = {
   },
 
   set hash(val) {
-    if (!~crypto.getHashes().indexOf(val))
+    if (!util.supportedHash(val))
       throw new Error('unsupported hash algorithm: ' + val)
     this._hash = val
   },
@@ -43,7 +44,7 @@ Keygrip.prototype = {
   },
 
   set cipher(val) {
-    if (!~crypto.getCiphers().indexOf(val))
+    if (!util.supportedCipher(val))
       throw new Error('unsupported cipher: ' + val)
     this._cipher = val
   },
@@ -54,18 +55,19 @@ Keygrip.prototype = {
 }
 
 // encrypt a message
-Keygrip.prototype.encrypt = function Keygrip$_encrypt(data, iv, key) {
+Keygrip.prototype.encrypt = function encrypt(data, iv, key) {
   key = key || this.keys[0]
 
   var cipher = iv
     ? crypto.createCipheriv(this.cipher, key, iv)
     : crypto.createCipher(this.cipher, key)
-  return Buffer.concat([cipher.update(data), cipher.final()])
+
+  return util.crypt(cipher, data)
 }
 
 // decrypt a single message
 // returns false on bad decrypts
-Keygrip.prototype.decrypt = function Keygrip$__decrypt(data, iv, key) {
+Keygrip.prototype.decrypt = function decrypt(data, iv, key) {
   if (!key) {
     // decrypt every key
     var keys = this.keys
@@ -81,7 +83,7 @@ Keygrip.prototype.decrypt = function Keygrip$__decrypt(data, iv, key) {
     var cipher = iv
       ? crypto.createDecipheriv(this.cipher, key, iv)
       : crypto.createDecipher(this.cipher, key)
-    return Buffer.concat([cipher.update(data), cipher.final()])
+    return util.crypt(cipher, data)
   } catch (err) {
     debug(err.stack)
     return false
@@ -89,17 +91,21 @@ Keygrip.prototype.decrypt = function Keygrip$__decrypt(data, iv, key) {
 }
 
 // message signing
-Keygrip.prototype.sign = function Keygrip$_sign(data, key) {
+Keygrip.prototype.sign = function sign(data, key) {
   // default to the first key
   key = key || this.keys[0]
 
-  return crypto
+  var digest = crypto
     .createHmac(this.hash, key)
     .update(data)
     .digest()
+
+  return typeof digest === 'string'
+    ? new Buffer(digest, 'binary')
+    : digest
 }
 
-Keygrip.prototype.verify = function Keygrip$_verify(data, digest) {
+Keygrip.prototype.verify = function verify(data, digest) {
   return this.indexOf(data, digest) > -1
 }
 
