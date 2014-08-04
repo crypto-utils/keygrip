@@ -55,24 +55,24 @@ Keygrip.prototype = {
 }
 
 // encrypt a message
-Keygrip.prototype.encrypt = function encrypt(data, iv, key) {
+Keygrip.prototype.encrypt = function encrypt(data, iv, key, encoding) {
   key = key || this.keys[0]
 
   var cipher = iv
     ? crypto.createCipheriv(this.cipher, key, iv)
     : crypto.createCipher(this.cipher, key)
 
-  return util.crypt(cipher, data)
+  return util.crypt(cipher, data, encoding)
 }
 
 // decrypt a single message
 // returns false on bad decrypts
-Keygrip.prototype.decrypt = function decrypt(data, iv, key) {
+Keygrip.prototype.decrypt = function decrypt(data, iv, key, encoding) {
   if (!key) {
     // decrypt every key
     var keys = this.keys
     for (var i = 0, l = keys.length; i < l; i++) {
-      var message = this.decrypt(data, iv, keys[i])
+      var message = this.decrypt(data, iv, keys[i], encoding)
       if (message !== false) return [message, i]
     }
 
@@ -83,7 +83,7 @@ Keygrip.prototype.decrypt = function decrypt(data, iv, key) {
     var cipher = iv
       ? crypto.createDecipheriv(this.cipher, key, iv)
       : crypto.createDecipher(this.cipher, key)
-    return util.crypt(cipher, data)
+    return util.crypt(cipher, data, encoding)
   } catch (err) {
     debug(err.stack)
     return false
