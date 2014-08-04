@@ -79,10 +79,10 @@ describe('Message encryption', function () {
 
   describe('with iv', function () {
     var iv = crypto.randomBytes(length)
-    var message = keygrip.encrypt('lol', iv)
+    var message = keygrip.encrypt('lol, have Σπ', iv)
 
     it('should encrypt and decrypt', function () {
-      assert.equal('lol', keygrip.decrypt(message, iv)[0].toString('utf8'))
+      assert.equal('lol, have Σπ', keygrip.decrypt(message, iv)[0].toString('utf8'))
     })
 
     it('should return false on invalid key', function () {
@@ -100,10 +100,10 @@ describe('Message encryption', function () {
   })
 
   describe('without iv', function () {
-    var message = keygrip.encrypt('lol')
+    var message = keygrip.encrypt('lol, have Σπ')
 
     it('should encrypt and decrypt', function () {
-      assert.equal('lol', keygrip.decrypt(message)[0].toString('utf8'))
+      assert.equal('lol, have Σπ', keygrip.decrypt(message)[0].toString('utf8'))
     })
 
     it('should return false on invalid key', function () {
