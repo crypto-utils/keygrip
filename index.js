@@ -125,5 +125,5 @@ Keygrip.sign =
 Keygrip.verify =
 Keygrip.index =
 Keygrip.indexOf = function() {
-  throw new Error("Usage: require('keygrip')(<array-of-keys>)")
+  throw new Error("Usage: require(\'keygrip\')(<array-of-keys>)")
 }
