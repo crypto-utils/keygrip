@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Key signing and verification for rotated credentials",
   "scripts": {
-    "test": "mocha --reporter spec --bail"
+    "test": "mocha --bail",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot",
+    "test-ci": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot"
   },
   "repository": "expressjs/keygrip",
   "dependencies": {
@@ -11,7 +13,8 @@
     "scmp": "0.0.3"
   },
   "devDependencies": {
-    "mocha": "1"
+    "istanbul": "~0.3.11",
+    "mocha": "2"
   },
   "engines": {
     "node": ">= 0.8.0"
