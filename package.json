@@ -10,7 +10,7 @@
   "repository": "expressjs/keygrip",
   "dependencies": {
     "debug": "*",
-    "scmp": "0.0.3"
+    "scmp": "1.0.0"
   },
   "devDependencies": {
     "istanbul": "0.3.9",
