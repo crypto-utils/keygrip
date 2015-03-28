@@ -1,4 +1,2 @@
-lib/defaultKeys.js
-defaultKeys.js
-node_modules
-.DS_Store*
+node_modules/
+npm-debug.log
