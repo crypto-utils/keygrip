@@ -3,7 +3,7 @@
 // ./test.js
 var crypto = require('crypto')
 var assert = require("assert")
-  , Keygrip = require("./")
+  , Keygrip = require("..")
   , keylist, keys, hash, index
 
 describe('keygrip(keys)', function () {
