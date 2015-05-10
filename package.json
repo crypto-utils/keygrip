@@ -10,7 +10,7 @@
   "license": "MIT",
   "repository": "crypto-utils/keygrip",
   "dependencies": {
-    "debug": "*",
+    "debug": "~2.1.3",
     "scmp": "1.0.0"
   },
   "devDependencies": {
