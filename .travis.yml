@@ -7,3 +7,4 @@ node_js:
   - "1.0"
   - "1.8"
 sudo: false
+dist: precise
