@@ -65,3 +65,7 @@ Set the hashing algorithm for signing, defaulting to `sha256`.
 ### .cipher=
 
 Set the algorithm used for message encryption, defaulting to `aes-256-cbc`.
+
+## License
+
+[MIT](LICENSE)

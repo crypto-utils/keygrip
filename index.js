@@ -1,3 +1,9 @@
+/*!
+ * keygrip
+ * Copyright(c) 2011-2014 Jed Schmidt
+ * Copyright(c) 2014 Jonathan Ong
+ * MIT Licensed
+ */
 
 var crypto = require("crypto")
 var constantTimeCompare = require('scmp')
