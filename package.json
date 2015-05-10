@@ -7,6 +7,6 @@
   },
   "repository": "crypto-utils/keygrip",
   "devDependencies": {
-    "mocha": "1"
+    "mocha": "1.21.5"
   }
 }
