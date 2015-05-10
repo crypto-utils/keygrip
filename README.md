@@ -1,7 +1,10 @@
-Keygrip
-=======
+# keygrip
 
-[![Build Status](https://secure.travis-ci.org/crypto-utils/keygrip.png)](http://travis-ci.org/crypto-utils/keygrip)
+[![NPM Version][npm-image]][npm-url]
+[![NPM Downloads][downloads-image]][downloads-url]
+[![Node.js Version][node-version-image]][node-version-url]
+[![Build Status][travis-image]][travis-url]
+[![Test Coverage][coveralls-image]][coveralls-url]
 
 Keygrip is a [node.js](http://nodejs.org/) module for signing and verifying data through a rotating credential system, in which new server keys can be added and old ones removed regularly, without invalidating client credentials.
 
@@ -69,3 +72,14 @@ Set the algorithm used for message encryption, defaulting to `aes-256-cbc`.
 ## License
 
 [MIT](LICENSE)
+
+[npm-image]: https://img.shields.io/npm/v/keygrip.svg
+[npm-url]: https://npmjs.org/package/keygrip
+[node-version-image]: https://img.shields.io/node/v/keygrip.svg
+[node-version-url]: http://nodejs.org/download/
+[travis-image]: https://img.shields.io/travis/crypto-utils/keygrip/master.svg
+[travis-url]: https://travis-ci.org/crypto-utils/keygrip
+[coveralls-image]: https://img.shields.io/coveralls/crypto-utils/keygrip/master.svg
+[coveralls-url]: https://coveralls.io/r/crypto-utils/keygrip?branch=master
+[downloads-image]: https://img.shields.io/npm/dm/keygrip.svg
+[downloads-url]: https://npmjs.org/package/keygrip
