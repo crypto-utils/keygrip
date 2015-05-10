@@ -29,7 +29,7 @@ The tradeoff here is that adding more keys to the keylist allows for more granul
 
 Keygrip keeps a reference to this array to automatically reflect any changes. This reference is stored using a closure to prevent external access.
 
-When using `Keygrip` to encrypt and decrypt data, each `key`'s length is important.
+When using `Keygrip` to encrypt and decrypt data, each `key`'s length is important, as it should be at least the minimum key length for the cipher you are using, otherwise it'll be padded with NULs. The default cipher, AES 256, should be a 32 character string key, for example.
 
 ### var buf = keys.sign(data)
 
