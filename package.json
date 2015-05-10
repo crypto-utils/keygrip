@@ -5,7 +5,7 @@
   "scripts": {
     "test": "mocha --reporter spec"
   },
-  "repository": "expressjs/keygrip",
+  "repository": "crypto-utils/keygrip",
   "devDependencies": {
     "mocha": "1"
   }
