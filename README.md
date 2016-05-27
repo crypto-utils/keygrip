@@ -23,51 +23,33 @@ var Keygrip = require('keygrip')
 keys = Keygrip(["SEKRIT2", "SEKRIT1"])
 ```
 
-The keylist is an array of all valid keys for signing, in descending order of freshness; new keys should be `unshift`ed into the array and old keys should be `pop`ped.
+The key list is an array of all valid keys for signing and encryption, in descending order of freshness. The tradeoff here is that adding more keys allows for more granular freshness for key validation, at the cost of a more expensive worst-case scenario for old or invalid payloads.
 
-The tradeoff here is that adding more keys to the keylist allows for more granular freshness for key validation, at the cost of a more expensive worst-case scenario for old or invalid hashes.
-
-Keygrip keeps a reference to this array to automatically reflect any changes. This reference is stored using a closure to prevent external access.
-
-When using `Keygrip` to encrypt and decrypt data, each `key`'s length is important, as it should be at least the minimum key length for the cipher you are using, otherwise it'll be padded with NULs. The default cipher, AES 256, should be a 32 character string key, for example.
+A key can be any arbitrary string or buffer, but it must be cryptographically secure. A secure random key can be generated using a command like `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"`. Keygrip derives its own internal keys from the string inputs.
 
 ### var buf = keys.sign(data)
 
-This creates a HMAC based on the _first_ key in the keylist, and outputs it as a buffer.
+Creates a cryptographic signature for the provided `data` based on the _first_ key in the keylist.
 
-Uses `.hash=` as the underlying algorithm.
+### var bool = keys.verify(data, signature)
 
-### var index = keys.indexOf(data)
+Verifies that the provided `signature` is valid for the `data` using any of the keys. Returns `true` or `false`.
+
+### var index = keys.indexOf(data, signature)
 
 This loops through all of the keys currently in the keylist until the digest of the current key matches the given digest, at which point the current index is returned. If no key is matched, `-1` is returned.
 
-The idea is that if the index returned is greater than `0`, the data should be re-signed to prevent premature credential invalidation, and enable better performance for subsequent challenges.
+The idea is that if the index returned is greater than `0`, the data should be re-signed to prevent premature credential invalidation, and to enable better performance for subsequent challenges.
 
-### var bool = keys.verify(data)
+### var buf = keys.encrypt(message)
 
-This uses `index` to return `true` if the digest matches any existing keys, and `false` otherwise.
+Creates an encrypted message as a buffer based on the _first_ key in the keylist.
 
-### var buf = keys.encrypt(message, [iv])
+### var [buf, i] = keys.decrypt(message)
 
-Creates an encrypted message as a buffer based on the _first_ key in the keylist and optionally based on an initialization vector.
+Decrypts the message. If the message is valid, returns a buffer as `buf`. Also returns `i`, the index of the `key` used. Likewise, if `i !== 0`, you may want to re-encrypt the message to use the latest key.
 
-Uses `.cipher=` as the underlying algorithm.
-Note that `iv` length is important.
-
-### var [buf, i] = keys.decrypt(message, [iv])
-
-Decrypts a message, optionally with an initialization vector.
-Returns a buffer as `buf`.
-Also returns `i`, the index of the `key` used.
-If `i !== 0`, you may want to re-encrypt the message to use the latest key.
-
-### keys.hash=
-
-Set the hashing algorithm for signing, defaulting to `sha256`.
-
-### .cipher=
-
-Set the algorithm used for message encryption, defaulting to `aes-256-cbc`.
+If the message is invalid, `false` is returned.
 
 ## License
 
