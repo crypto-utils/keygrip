@@ -1,2 +1,3 @@
-lib/defaultKeys.js
-defaultKeys.js
+coverage/
+node_modules/
+npm-debug.log
