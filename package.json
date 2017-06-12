@@ -2,6 +2,7 @@
   "name": "keygrip",
   "version": "1.0.1",
   "description": "Key signing and verification for rotated credentials",
+  "license": "MIT",
   "scripts": {
     "test": "node test.js"
   },
