@@ -8,5 +8,8 @@
   "repository": "crypto-utils/keygrip",
   "devDependencies": {
     "mocha": "1.21.5"
+  },
+  "engines": {
+    "node": ">= 0.6"
   }
 }
