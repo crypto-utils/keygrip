@@ -1,3 +1,9 @@
+/*!
+ * keygrip
+ * Copyright(c) 2011-2014 Jed Schmidt
+ * MIT Licensed
+ */
+
 var crypto = require("crypto")
   
 function Keygrip(keys, algorithm, encoding) {

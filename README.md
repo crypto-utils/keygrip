@@ -88,9 +88,6 @@ hash = keys.sign("bieberschnitzel")
 
 * Write a library for URL signing
 
-Copyright
----------
+## License
 
-Copyright (c) 2012 Jed Schmidt. See LICENSE.txt for details.
-
-Send any questions or comments [here](http://twitter.com/jedschmidt).
+[MIT](LICENSE)
