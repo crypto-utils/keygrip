@@ -85,10 +85,6 @@ assert.equal(index, 1)
 hash = keys.sign("bieberschnitzel")
 ```
 
-## TODO
-
-* Write a library for URL signing
-
 ## License
 
 [MIT](LICENSE)
