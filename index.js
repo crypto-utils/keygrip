@@ -4,6 +4,8 @@
  * MIT Licensed
  */
 
+'use strict'
+
 var crypto = require("crypto")
   
 function Keygrip(keys, algorithm, encoding) {
