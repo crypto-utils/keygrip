@@ -1,8 +1,7 @@
 "use strict";
 
-// ./test.js
 var assert = require("assert")
-  , Keygrip = require("./")
+var Keygrip = require('..')
   , keylist, keys, hash, index
 
 describe('keygrip(keys)', function () {
