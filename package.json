@@ -3,11 +3,9 @@
   "version": "1.0.2",
   "description": "Key signing and verification for rotated credentials",
   "license": "MIT",
-  "scripts": {
-    "test": "mocha --reporter spec test/"
-  },
   "repository": "crypto-utils/keygrip",
   "devDependencies": {
+    "istanbul": "0.4.5",
     "mocha": "1.21.5"
   },
   "files": [
@@ -18,5 +16,10 @@
   ],
   "engines": {
     "node": ">= 0.6"
+  },
+  "scripts": {
+    "test": "mocha --reporter spec test/",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot test/",
+    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot test/"
   }
 }

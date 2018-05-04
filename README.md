@@ -3,6 +3,7 @@
 [![NPM Version][npm-image]][npm-url]
 [![NPM Downloads][downloads-image]][downloads-url]
 [![Build Status][travis-image]][travis-url]
+[![Test Coverage][coveralls-image]][coveralls-url]
 
 Keygrip is a [node.js](http://nodejs.org/) module for signing and verifying data (such as cookies or URLs) through a rotating credential system, in which new server keys can be added and old ones removed regularly, without invalidating client credentials.
 
@@ -93,5 +94,7 @@ hash = keys.sign("bieberschnitzel")
 [npm-url]: https://npmjs.org/package/keygrip
 [travis-image]: https://img.shields.io/travis/crypto-utils/keygrip/master.svg
 [travis-url]: https://travis-ci.org/crypto-utils/keygrip
+[coveralls-image]: https://img.shields.io/coveralls/crypto-utils/keygrip/master.svg
+[coveralls-url]: https://coveralls.io/r/crypto-utils/keygrip
 [downloads-image]: https://img.shields.io/npm/dm/keygrip.svg
 [downloads-url]: https://npmjs.org/package/keygrip
