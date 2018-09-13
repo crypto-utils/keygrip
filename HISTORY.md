@@ -1,5 +1,5 @@
-unreleased
-==========
+1.0.3 / 2018-09-12
+==================
 
   * perf: enable strict mode
 
