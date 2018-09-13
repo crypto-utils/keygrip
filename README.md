@@ -2,6 +2,7 @@
 
 [![NPM Version][npm-image]][npm-url]
 [![NPM Downloads][downloads-image]][downloads-url]
+[![Node.js Version][node-version-image]][node-version-url]
 [![Build Status][travis-image]][travis-url]
 [![Test Coverage][coveralls-image]][coveralls-url]
 
@@ -98,3 +99,5 @@ hash = keys.sign("bieberschnitzel")
 [coveralls-url]: https://coveralls.io/r/crypto-utils/keygrip
 [downloads-image]: https://img.shields.io/npm/dm/keygrip.svg
 [downloads-url]: https://npmjs.org/package/keygrip
+[node-version-image]: https://img.shields.io/node/v/keygrip.svg
+[node-version-url]: https://nodejs.org/en/download/
