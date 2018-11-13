@@ -1,3 +1,8 @@
+unreleased
+==========
+
+  * Use `tsscmp` module for timing-safe signature verification
+
 1.0.3 / 2018-09-12
 ==================
 

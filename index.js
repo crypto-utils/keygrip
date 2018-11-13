@@ -6,6 +6,7 @@
 
 'use strict'
 
+var compare = require('tsscmp')
 var crypto = require("crypto")
   
 function Keygrip(keys, algorithm, encoding) {
@@ -34,7 +35,9 @@ function Keygrip(keys, algorithm, encoding) {
 
   this.index = function(data, digest) {
     for (var i = 0, l = keys.length; i < l; i++) {
-      if (constantTimeCompare(digest, sign(data, keys[i]))) return i
+      if (compare(digest, sign(data, keys[i]))) {
+        return i
+      }
     }
 
     return -1
@@ -44,28 +47,5 @@ function Keygrip(keys, algorithm, encoding) {
 Keygrip.sign = Keygrip.verify = Keygrip.index = function() {
   throw new Error("Usage: require('keygrip')(<array-of-keys>)")
 }
-
-//http://codahale.com/a-lesson-in-timing-attacks/
-var constantTimeCompare = function(val1, val2){
-    if(val1 == null && val2 != null){
-        return false;
-    } else if(val2 == null && val1 != null){
-        return false;
-    } else if(val1 == null && val2 == null){
-        return true;
-    }
-
-    if(val1.length !== val2.length){
-        return false;
-    }
-
-    var result = 0;
-
-    for(var i = 0; i < val1.length; i++){
-        result |= val1.charCodeAt(i) ^ val2.charCodeAt(i); //Don't short circuit
-    }
-
-    return result === 0;
-};
 
 module.exports = Keygrip

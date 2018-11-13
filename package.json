@@ -4,6 +4,9 @@
   "description": "Key signing and verification for rotated credentials",
   "license": "MIT",
   "repository": "crypto-utils/keygrip",
+  "dependencies": {
+    "tsscmp": "1.0.6"
+  },
   "devDependencies": {
     "istanbul": "0.4.5",
     "mocha": "1.21.5"
