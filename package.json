@@ -8,8 +8,8 @@
     "tsscmp": "1.0.6"
   },
   "devDependencies": {
-    "istanbul": "0.4.5",
-    "mocha": "6.0.2"
+    "mocha": "6.0.2",
+    "nyc": "14.0.0"
   },
   "files": [
     "HISTORY.md",
@@ -22,7 +22,7 @@
   },
   "scripts": {
     "test": "mocha --reporter spec test/",
-    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot test/",
-    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot test/"
+    "test-cov": "nyc --reporter=html --reporter=text npm test",
+    "test-travis": "nyc --reporter=text npm test"
   }
 }
