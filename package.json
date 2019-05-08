@@ -8,7 +8,7 @@
     "tsscmp": "1.0.6"
   },
   "devDependencies": {
-    "mocha": "6.0.2",
+    "mocha": "6.1.4",
     "nyc": "14.0.0"
   },
   "files": [
