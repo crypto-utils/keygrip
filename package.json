@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "mocha": "6.2.0",
-    "nyc": "14.0.0"
+    "nyc": "14.1.1"
   },
   "files": [
     "HISTORY.md",
