@@ -66,6 +66,10 @@ before_install:
     npm config set shrinkwrap false
   # Setup Node.js version-specific dependencies
   - |
+    # Configure eslint for linting
+    if node_version_lt '10.0'; then npm_remove_module_re '^eslint(-|$)'
+    fi
+  - |
     # Configure mocha for testing
     if   node_version_lt '0.8' ; then npm_use_module 'mocha' '1.21.5'
     elif node_version_lt '0.10'; then npm_use_module 'mocha' '2.5.3'
@@ -97,6 +101,10 @@ script:
     # Run test script, depending on nyc install
     if npm_module_installed 'nyc'; then npm run-script test-travis
     else npm test
+    fi
+  - |
+    # Run linting, if eslint exists
+    if npm_module_installed 'eslint'; then npm run-script lint
     fi
 after_script:
   - |
